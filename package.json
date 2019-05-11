@@ -17,6 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "component": "bash scripts/createComponent/createComponent.sh",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "eslintConfig": {
