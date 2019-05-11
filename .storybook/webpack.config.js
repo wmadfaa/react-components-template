@@ -13,7 +13,20 @@ module.exports = ({ config }) => {
           configFileName: "./.storybook/tsconfig.json"
         }
       },
-      { loader: require.resolve("react-docgen-typescript-loader") }
+      { loader: require.resolve("react-docgen-typescript-loader") },
+      {
+        loader: require.resolve("@storybook/addon-storysource/loader"),
+        options: {
+          parser: "typescript",
+          prettierConfig: {
+            printWidth: 120,
+            tabWidth: 2,
+            bracketSpacing: true,
+            trailingComma: "es5",
+            singleQuote: true
+          }
+        }
+      }
     ]
   });
   config.resolve.extensions.push(".ts", ".tsx");
