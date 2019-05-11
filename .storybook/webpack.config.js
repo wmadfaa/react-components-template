@@ -1,34 +1,23 @@
-const path = require("path");
-const SRC_PATH = path.join(__dirname, "../src");
-const STORIES_PATH = path.join(__dirname, "../stories");
-//dont need stories path if you have your stories inside your //components folder
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin-alt");
+
 module.exports = ({ config }) => {
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
-    include: [SRC_PATH, STORIES_PATH],
-    use: [
-      {
-        loader: require.resolve("awesome-typescript-loader"),
-        options: {
-          configFileName: "./.storybook/tsconfig.json"
-        }
-      },
-      { loader: require.resolve("react-docgen-typescript-loader") },
-      {
-        loader: require.resolve("@storybook/addon-storysource/loader"),
-        options: {
-          parser: "typescript",
-          prettierConfig: {
-            printWidth: 120,
-            tabWidth: 2,
-            bracketSpacing: true,
-            trailingComma: "es5",
-            singleQuote: true
-          }
-        }
-      }
-    ]
+    loader: require.resolve("babel-loader"),
+    options: {
+      presets: [require.resolve("babel-preset-react-app")]
+    }
   });
+
   config.resolve.extensions.push(".ts", ".tsx");
+
+  config.plugins.push(
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      checkSyntacticErrors: true,
+      formatter: require("react-dev-utils/typescriptFormatter")
+    })
+  );
+
   return config;
 };
